@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import lombok.Getter;
 
 @Getter
-public class ForumCreateDto {
+public class PostCreateDto {
 	String title;
 	String content;
 	ArrayList<String> tags;

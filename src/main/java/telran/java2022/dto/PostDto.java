@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 @Builder
-public class ForumDto {
+public class PostDto {
 	String id;
 	String title;
 	String content;

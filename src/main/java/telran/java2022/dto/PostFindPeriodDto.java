@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import lombok.Getter;
 
 @Getter
-public class ForumFindPeriodDto {
+public class PostFindPeriodDto {
 	LocalDate dateFrom;
 	LocalDate dateTo;
 }
