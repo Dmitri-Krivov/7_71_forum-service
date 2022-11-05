@@ -4,5 +4,5 @@ import lombok.Getter;
 
 @Getter
 public class PostMessageDto {
-	String messageString;
+	String message;
 }

@@ -28,8 +28,7 @@ public class Post {
 	Integer likes;
 	ArrayList<UserComment> comments = new ArrayList<>();
 
-	public Post( String title, String content, String author,
-			ArrayList<String> tags) {
+	public Post(String title, String content, String author, ArrayList<String> tags) {
 		this.title = title;
 		this.content = content;
 		this.author = author;
@@ -38,7 +37,7 @@ public class Post {
 		likes = 0;
 	}
 
-	public void tags(ArrayList<String> nTegs) {
+	public void addTags(ArrayList<String> nTegs) {
 		tags.addAll(nTegs);
 	}
 
@@ -46,8 +45,8 @@ public class Post {
 		likes++;
 	}
 
-	public void comments(ArrayList<UserComment> nComment) {
-		comments.addAll(nComment);
+	public void addComments(UserComment messageDto) {
+		comments.add(messageDto);
 	}
 
 }
