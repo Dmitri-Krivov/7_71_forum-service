@@ -23,7 +23,7 @@ public class ForumController {
 	}
 
 	@GetMapping("/forum/post/{id}")
-	public PostDto findPost(@PathVariable String id) {
+	public Post findPost(@PathVariable String id) {
 		return forumService.findPost(id);
 	}
 

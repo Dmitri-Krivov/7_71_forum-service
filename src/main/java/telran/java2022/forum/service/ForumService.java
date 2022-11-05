@@ -11,7 +11,7 @@ import telran.java2022.forum.model.Post;
 
 public interface ForumService {
 	Post addPost(String author, PostCreateDto postCreateDto);
-	PostDto findPost(String id);
+	Post findPost(String id);
 	void addLike(String id);
 	ArrayList<PostDto> findPostByAuthor(String author);
 	PostDto addComment(String id,  String author);
