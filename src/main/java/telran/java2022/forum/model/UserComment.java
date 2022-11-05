@@ -1,4 +1,4 @@
-package telran.java2022.model;
+package telran.java2022.forum.model;
 
 import lombok.Getter;
 

@@ -1,4 +1,4 @@
-package telran.java2022.model;
+package telran.java2022.forum.model;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -28,14 +28,14 @@ public class Post {
 	Integer likes;
 	ArrayList<UserComment> comments = new ArrayList<>();
 
-	public Post(String id, String title, String content, String author, LocalDateTime dateCreated,
+	public Post( String title, String content, String author,
 			ArrayList<String> tags) {
-		this.id = id;
 		this.title = title;
 		this.content = content;
 		this.author = author;
-		this.dateCreated = dateCreated;
+		this.dateCreated = LocalDateTime.now();
 		this.tags = tags;
+		likes = 0;
 	}
 
 	public void tags(ArrayList<String> nTegs) {

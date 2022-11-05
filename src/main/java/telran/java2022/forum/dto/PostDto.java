@@ -1,13 +1,13 @@
-package telran.java2022.dto;
+package telran.java2022.forum.dto;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import telran.java2022.model.UserComment;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import telran.java2022.forum.model.UserComment;
 
 @AllArgsConstructor
 @NoArgsConstructor

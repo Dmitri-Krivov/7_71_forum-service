@@ -1,11 +1,12 @@
-package telran.java2022.dto;
+package telran.java2022.forum.dto;
 
 import java.util.ArrayList;
 
 import lombok.Getter;
 
 @Getter
-public class PostUpdateDto {
+public class PostCreateDto {
 	String title;
+	String content;
 	ArrayList<String> tags;
 }
