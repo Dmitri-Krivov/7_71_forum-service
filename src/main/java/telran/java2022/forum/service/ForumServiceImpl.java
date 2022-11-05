@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import telran.java2022.forum.dto.PostCreateDto;
+import telran.java2022.forum.dto.PostDto;
 import telran.java2022.forum.dto.PostFindPeriodDto;
 import telran.java2022.forum.dto.PostMessageDto;
 import telran.java2022.forum.dto.PostUpdateDto;
@@ -24,16 +25,16 @@ public class ForumServiceImpl implements ForumService {
 	final ModelMapper modelMapper;
 
 	@Override
-	public Post addPost(String author, PostCreateDto postCreateDto) {
+	public PostDto addPost(String author, PostCreateDto postCreateDto) {
 		Post post = new Post(postCreateDto.getTitle(), postCreateDto.getContent(), author, postCreateDto.getTags());
 		forumRepository.save(post);
-		return post;
+		return modelMapper.map(post, PostDto.class);
 	}
 
 	@Override
-	public Post findPost(String id) {
+	public PostDto findPost(String id) {
 		Post post = forumRepository.findById(id).orElseThrow(() -> new PostNotFoundException(id));
-		return post;
+		return modelMapper.map(post, PostDto.class);
 	}
 
 	@Override
@@ -44,44 +45,44 @@ public class ForumServiceImpl implements ForumService {
 	}
 
 	@Override
-	public List<Post> findPostByAuthor(String author) {
+	public List<PostDto> findPostByAuthor(String author) {
 		return forumRepository.findByAuthorIgnoreCase(author).collect(Collectors.toList());
 	}
 
 	@Override
-	public Post addComment(String id, String user, PostMessageDto messageDto) {
+	public PostDto addComment(String id, String user, PostMessageDto messageDto) {
 		Post post = forumRepository.findById(id).orElseThrow(() -> new PostNotFoundException(id));
 		UserComment userComment = new UserComment(user, messageDto.getMessage());
 		post.addComments(userComment);
 		forumRepository.save(post);
-		return post;
+		return modelMapper.map(post, PostDto.class);
 	}
 
 	@Override
-	public Post deletePost(String id) {
+	public PostDto deletePost(String id) {
 		Post post = forumRepository.findById(id).orElseThrow(() -> new PostNotFoundException(id));
 		forumRepository.deleteById(id);
-		return post;
+		return modelMapper.map(post, PostDto.class);
 	}
 
 	@Override
-	public List<Post> findPostsByTags(List<String> tags) {
+	public List<PostDto> findPostsByTags(List<String> tags) {
 		return forumRepository.findByTagsInIgnoreCase(tags).collect(Collectors.toList());
 	}
 
 	@Override
-	public List<Post> findPostsByPeriod(PostFindPeriodDto postFindPeriodDto) {
+	public List<PostDto> findPostsByPeriod(PostFindPeriodDto postFindPeriodDto) {
 		return forumRepository.findByDateCreatedBetween(postFindPeriodDto.getDateFrom(), postFindPeriodDto.getDateTo())
 				.collect(Collectors.toList());
 	}
 
 	@Override
-	public Post updatePost(String id, PostUpdateDto postUpdateDto) {
+	public PostDto updatePost(String id, PostUpdateDto postUpdateDto) {
 		Post post = forumRepository.findById(id).orElseThrow(() -> new PostNotFoundException(id));
 		post.setTitle(postUpdateDto.getTitle());
 		post.addTags(postUpdateDto.getTags());
 		forumRepository.save(post);
-		return post;
+		return modelMapper.map(post, PostDto.class);
 	}
 
 }
