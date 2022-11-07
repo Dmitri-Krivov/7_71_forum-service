@@ -2,8 +2,11 @@ package telran.java2022.forum.model;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -11,8 +14,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
-@NoArgsConstructor
-@EqualsAndHashCode(of = "id")
+@EqualsAndHashCode(of = {"id"})
+@Document(collection = "Posts")
 public class Post {
 	@Id
 	String id;
@@ -24,11 +27,17 @@ public class Post {
 	String author;
 	@Setter
 	LocalDateTime dateCreated;
-	ArrayList<String> tags = new ArrayList<>();
-	Integer likes;
-	ArrayList<UserComment> comments = new ArrayList<>();
+	Set<String> tags;
+	int likes;
+	List<UserComment> comments;
+	
+	public Post() {
+		dateCreated = LocalDateTime.now();
+		comments = new ArrayList<>();
+	}
 
-	public Post(String title, String content, String author, ArrayList<String> tags) {
+	public Post(String title, String content, String author, Set<String> tags) {
+		this();
 		this.title = title;
 		this.content = content;
 		this.author = author;
@@ -37,7 +46,7 @@ public class Post {
 		likes = 0;
 	}
 
-	public void addTags(ArrayList<String> nTegs) {
+	public void addTags(Set<String> nTegs) {
 		tags.addAll(nTegs);
 	}
 

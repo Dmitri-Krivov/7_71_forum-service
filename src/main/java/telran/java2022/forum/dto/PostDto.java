@@ -2,6 +2,9 @@ package telran.java2022.forum.dto;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,8 +21,9 @@ public class PostDto {
 	String title;
 	String content;
 	String author;
+	@JsonFormat(pattern = "yyy-MM-dd'T'HH:mm:ss")
 	LocalDateTime dateCreated;
-	ArrayList<String> tags;
+	Set<String> tags;
 	Integer likes;
 	ArrayList<UserComment> comments;
 }

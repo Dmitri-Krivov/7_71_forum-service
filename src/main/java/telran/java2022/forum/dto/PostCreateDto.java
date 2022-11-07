@@ -1,6 +1,6 @@
 package telran.java2022.forum.dto;
 
-import java.util.ArrayList;
+import java.util.Set;
 
 import lombok.Getter;
 
@@ -8,5 +8,5 @@ import lombok.Getter;
 public class PostCreateDto {
 	String title;
 	String content;
-	ArrayList<String> tags;
+	Set<String> tags;
 }

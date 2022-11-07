@@ -1,6 +1,7 @@
 package telran.java2022.forum.service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -61,7 +62,7 @@ public class ForumServiceImpl implements ForumService {
 	@Override
 	public PostDto deletePost(String id) {
 		Post post = forumRepository.findById(id).orElseThrow(() -> new PostNotFoundException(id));
-		forumRepository.deleteById(id);
+		forumRepository.delete(post);
 		return modelMapper.map(post, PostDto.class);
 	}
 
@@ -79,8 +80,14 @@ public class ForumServiceImpl implements ForumService {
 	@Override
 	public PostDto updatePost(String id, PostUpdateDto postUpdateDto) {
 		Post post = forumRepository.findById(id).orElseThrow(() -> new PostNotFoundException(id));
-		post.setTitle(postUpdateDto.getTitle());
-		post.addTags(postUpdateDto.getTags());
+		String title = postUpdateDto.getTitle();
+		if (title != null) {
+			post.setTitle(title);
+		}
+		Set<String> tags = postUpdateDto.getTags();
+		if (tags != null) {
+			post.addTags(tags);
+		}
 		forumRepository.save(post);
 		return modelMapper.map(post, PostDto.class);
 	}

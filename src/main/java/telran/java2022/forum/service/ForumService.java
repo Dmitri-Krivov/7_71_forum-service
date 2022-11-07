@@ -15,15 +15,15 @@ public interface ForumService {
 
 	void addLike(String id);
 
-	List<PostDto> findPostByAuthor(String author);
+	Iterable<PostDto> findPostByAuthor(String author);
 
 	PostDto addComment(String id, String author, PostMessageDto messageDto);
 
 	PostDto deletePost(String id);
 
-	List<PostDto> findPostsByTags(List<String> tags);
+	Iterable<PostDto> findPostsByTags(List<String> tags);
 
-	List<PostDto> findPostsByPeriod(PostFindPeriodDto postFindPeriodDto);
+	Iterable<PostDto> findPostsByPeriod(PostFindPeriodDto postFindPeriodDto);
 
 	PostDto updatePost(String id, PostUpdateDto postUpdateDto);
 
