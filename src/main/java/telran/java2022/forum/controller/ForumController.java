@@ -45,7 +45,7 @@ public class ForumController {
 	}
 
 	@GetMapping("/posts/author/{author}")
-	public List<PostDto> findPostsByAuthor(@PathVariable String author) {
+	public Iterable<PostDto> findPostsByAuthor(@PathVariable String author) {
 		return forumService.findPostByAuthor(author);
 	}
 
@@ -61,12 +61,12 @@ public class ForumController {
 	}
 
 	@PostMapping("/posts/tags")
-	public List<PostDto> findPostsByTegs(@RequestBody List<String> tags) {
+	public Iterable<PostDto> findPostsByTegs(@RequestBody List<String> tags) {
 		return forumService.findPostsByTags(tags);
 	}
 
 	@PostMapping("/posts/period")
-	public List<PostDto> findPostsByPeriod(@RequestBody PostFindPeriodDto postFindPeriodDto) {
+	public Iterable<PostDto> findPostsByPeriod(@RequestBody PostFindPeriodDto postFindPeriodDto) {
 		return forumService.findPostsByPeriod(postFindPeriodDto);
 	}
 
