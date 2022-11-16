@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
+import telran.java2022.forum.dao.ForumRepository;
 import telran.java2022.forum.dto.PostCreateDto;
 import telran.java2022.forum.dto.PostDto;
 import telran.java2022.forum.dto.PostFindPeriodDto;
@@ -16,7 +17,6 @@ import telran.java2022.forum.dto.PostUpdateDto;
 import telran.java2022.forum.dto.exceptions.PostNotFoundException;
 import telran.java2022.forum.model.Post;
 import telran.java2022.forum.model.UserComment;
-import telran.java2022.forum.repository.ForumRepository;
 
 @Service
 @RequiredArgsConstructor

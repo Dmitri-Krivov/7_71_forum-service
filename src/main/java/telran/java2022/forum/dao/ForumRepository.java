@@ -1,4 +1,4 @@
-package telran.java2022.forum.repository;
+package telran.java2022.forum.dao;
 
 import java.time.LocalDate;
 import java.util.List;

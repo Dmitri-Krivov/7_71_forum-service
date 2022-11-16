@@ -1,7 +1,6 @@
 package telran.java2022.security.filter;
 
 import java.io.IOException;
-import java.security.Principal;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -19,9 +18,9 @@ import telran.java2022.security.context.SecurityContext;
 import telran.java2022.security.context.User;
 
 @Component
-@Order(30)
+@Order(15)
 @RequiredArgsConstructor
-public class AdminFilter implements Filter {
+public class UserFilter implements Filter {
 
 //	final UserRepository userRepository;
 	final SecurityContext context;
@@ -32,15 +31,20 @@ public class AdminFilter implements Filter {
 		HttpServletRequest request = (HttpServletRequest) req;
 		HttpServletResponse response = (HttpServletResponse) resp;
 		String path = request.getServletPath();
+
 		if (checkEndPoint(request.getMethod(), request.getServletPath())) {
-			Principal principal = request.getUserPrincipal();
-//			UserAccount user = userRepository.findById(request.getUserPrincipal().getName()).get();
-			User user = context.getUser(request.getUserPrincipal().getName());
-			System.out.println(user.getRoles());
+			String name = request.getUserPrincipal().getName();
 			String[] arr = path.split("/");
 			String userName = arr[arr.length - 1];
-			if (!(user.getRoles().contains("ADMINISTRATOR".toUpperCase()) || userName.equals(principal.getName()))) {
-				response.sendError(403, "You don`t have permission to do it, only ADMINISTRATOR or Owner");
+			
+//			UserAccount user = userRepository.findById(request.getUserPrincipal().getName()).get();
+			User user = context.getUser(request.getUserPrincipal().getName());
+
+			if(!userName.equals(name)){
+				throw new Error("You don`t have permission to do it");
+			}
+			if (!user.getRoles().contains("USER".toUpperCase())) {
+				response.sendError(403, "You don`t have permission to do it, only USER");
 				return;
 			}
 		}
@@ -48,8 +52,12 @@ public class AdminFilter implements Filter {
 	}
 
 	private boolean checkEndPoint(String method, String servletPath) {
-		return (servletPath.matches("/account/user/\\w+/role/\\w+/?")
-				|| (servletPath.matches("/account/user/\\w+/?") && "DELETE".equalsIgnoreCase(method)));
-	}
 
+		boolean removeUser = servletPath.matches("/account/user/\\w+/?") && "DELETE".equalsIgnoreCase(method);
+		boolean updateUser = servletPath.matches( "/account/user/\\w+/?") && "PUT".equalsIgnoreCase(method);
+		boolean post = servletPath.matches("/forum/post/\\w+/?") && "Post".equalsIgnoreCase(method);
+		boolean addCommentPost = servletPath.matches("/forum/post/\\w+/comment/\\w+/?");
+
+		return removeUser || updateUser|| addCommentPost||post ;
+	}
 }

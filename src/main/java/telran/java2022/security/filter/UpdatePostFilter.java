@@ -15,16 +15,14 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import lombok.RequiredArgsConstructor;
-import telran.java2022.security.context.SecurityContext;
-import telran.java2022.security.context.User;
+import telran.java2022.forum.dao.ForumRepository;
+import telran.java2022.forum.model.Post;
 
 @Component
-@Order(30)
 @RequiredArgsConstructor
-public class AdminFilter implements Filter {
-
-//	final UserRepository userRepository;
-	final SecurityContext context;
+@Order(40)
+public class UpdatePostFilter implements Filter {
+	final ForumRepository forumRepository;
 
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
@@ -32,24 +30,28 @@ public class AdminFilter implements Filter {
 		HttpServletRequest request = (HttpServletRequest) req;
 		HttpServletResponse response = (HttpServletResponse) resp;
 		String path = request.getServletPath();
-		if (checkEndPoint(request.getMethod(), request.getServletPath())) {
+		if (checkEndPoints(request.getMethod(), request.getServletPath())) {
 			Principal principal = request.getUserPrincipal();
-//			UserAccount user = userRepository.findById(request.getUserPrincipal().getName()).get();
-			User user = context.getUser(request.getUserPrincipal().getName());
-			System.out.println(user.getRoles());
 			String[] arr = path.split("/");
-			String userName = arr[arr.length - 1];
-			if (!(user.getRoles().contains("ADMINISTRATOR".toUpperCase()) || userName.equals(principal.getName()))) {
-				response.sendError(403, "You don`t have permission to do it, only ADMINISTRATOR or Owner");
+			String postId = arr[arr.length - 1];
+			Post post = forumRepository.findById(postId).orElse(null);
+			if (post == null) {
+				response.sendError(404, "post id = " + postId + " not found");
+				return;
+			}
+			String author = post.getAuthor();
+			if (!principal.getName().equals(author)) {
+				response.sendError(403);
 				return;
 			}
 		}
 		chain.doFilter(request, response);
+
 	}
 
-	private boolean checkEndPoint(String method, String servletPath) {
-		return (servletPath.matches("/account/user/\\w+/role/\\w+/?")
-				|| (servletPath.matches("/account/user/\\w+/?") && "DELETE".equalsIgnoreCase(method)));
+	private boolean checkEndPoints(String method, String servletPath) {
+		return servletPath.matches("/forum/post/\\w+/?") && "Put".equalsIgnoreCase(method);
+
 	}
 
 }
