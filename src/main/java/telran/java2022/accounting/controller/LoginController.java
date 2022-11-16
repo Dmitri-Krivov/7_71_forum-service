@@ -1,7 +1,6 @@
 package telran.java2022.accounting.controller;
 
 import java.security.Principal;
-import java.util.Base64;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,12 +14,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
-import telran.java2022.login.dto.AddRoleDto;
-import telran.java2022.login.dto.CreateUserDto;
-import telran.java2022.login.dto.LoginAndChangePassDto;
-import telran.java2022.login.dto.UpdateNameDto;
-import telran.java2022.login.dto.UserDto;
-import telran.java2022.login.service.LoginService;
+import telran.java2022.accounting.dto.AddRoleDto;
+import telran.java2022.accounting.dto.CreateUserDto;
+import telran.java2022.accounting.dto.UpdateNameDto;
+import telran.java2022.accounting.dto.UserDto;
+import telran.java2022.accounting.service.LoginService;
 
 @RestController
 @RequestMapping("/account")
